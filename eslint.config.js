@@ -1,38 +1,76 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import react from 'eslint-plugin-react'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
+import js from "@eslint/js";
+import globals from "globals";
+import eslintReact from "eslint-plugin-react";
+import eslintReactHooks from "eslint-plugin-react-hooks";
+import eslintReactRefresh from "eslint-plugin-react-refresh";
+import prettierPlugin from "eslint-plugin-prettier";
+import eslintConfigPrettier from "eslint-config-prettier";
+import eslintImport from "eslint-plugin-import";
+import reactConfig from "eslint-plugin-import/config/react.js";
+
+const { parserOptions } = reactConfig;
 
 export default [
-  { ignores: ['dist'] },
   {
-    files: ['**/*.{js,jsx}'],
-    languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        ecmaFeatures: { jsx: true },
-        sourceType: 'module',
-      },
-    },
-    settings: { react: { version: '18.3' } },
+    ignores: ["node_modules", "dist"],
+  },
+  js.configs.recommended,
+  {
     plugins: {
-      react,
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
+      react: eslintReact,
+      "react-hooks": eslintReactHooks,
+      "react-refresh": eslintReactRefresh,
+      prettier: prettierPlugin,
+      import: eslintImport,
+    },
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        ...globals.browser,
+        ...globals.es2024,
+      },
+      parserOptions,
     },
     rules: {
-      ...js.configs.recommended.rules,
-      ...react.configs.recommended.rules,
-      ...react.configs['jsx-runtime'].rules,
-      ...reactHooks.configs.recommended.rules,
-      'react/jsx-no-target-blank': 'off',
-      'react-refresh/only-export-components': [
-        'warn',
+      ...eslintConfigPrettier.rules,
+      "no-console": "warn",
+      "react/jsx-no-target-blank": "off",
+      "react-refresh/only-export-components": [
+        "warn",
         { allowConstantExport: true },
       ],
+      "prettier/prettier": [
+        "error",
+        {
+          endOfLine: "auto",
+          singleQuote: false,
+          tabWidth: 2,
+          trailingComma: "es5",
+          bracketSpacing: true,
+        },
+      ],
+      "import/no-default-export": "error",
+      "no-unused-vars": [
+        "error",
+        {
+          vars: "all",
+          args: "after-used",
+          ignoreRestSiblings: true,
+        },
+      ],
+      "func-style": ["error", "expression"],
+      "prefer-arrow-callback": ["error"],
+      "react/jsx-uses-vars": "error",
+      "no-shadow": "off",
+      "no-alert": "error",
+      eqeqeq: "error",
+      "react/jsx-no-undef": "error",
     },
   },
-]
+  {
+    files: ["eslint.config.js"],
+    rules: {
+      "import/no-default-export": "off",
+    },
+  },
+];
