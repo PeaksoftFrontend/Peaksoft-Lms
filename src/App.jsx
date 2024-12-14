@@ -6,3 +6,7 @@ function App() {
   )
 }
 export default App
+  return <></>;
+}
+
+export default App;
