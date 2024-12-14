@@ -1,12 +1,3 @@
-function App() {
-  return (
-    <div> 
-      
-    </div>
-  )
-}
-export default App
-  return <></>;
-}
-
-export default App;
+export const App = () => {
+  return <div></div>;
+};
