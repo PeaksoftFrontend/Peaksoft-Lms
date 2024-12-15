@@ -4,7 +4,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem, { menuItemClasses } from "@mui/material/MenuItem";
 import { MenuList, styled } from "@mui/material";
 
-export const ReusableMenu = ({ menuItems = [] }) => {
+export const MeatballsList = ({ menu = [] }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -23,7 +23,7 @@ export const ReusableMenu = ({ menuItems = [] }) => {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        Dashboard
+        +
       </Button>
       <StyledUl
         id="basic-menu"
@@ -35,7 +35,7 @@ export const ReusableMenu = ({ menuItems = [] }) => {
         }}
       >
         <StyledDiv>
-          {menuItems?.map((item) => (
+          {menu?.map((item) => (
             <StyledLi key={item.id} {...item} />
           ))}
         </StyledDiv>
@@ -44,7 +44,6 @@ export const ReusableMenu = ({ menuItems = [] }) => {
   );
 };
 
-export default ReusableMenu;
 export const StyledDiv = styled("div")({
   width: "218px",
 });
