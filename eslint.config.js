@@ -6,31 +6,33 @@ import eslintReactRefresh from "eslint-plugin-react-refresh";
 import prettierPlugin from "eslint-plugin-prettier";
 import eslintConfigPrettier from "eslint-config-prettier";
 import eslintImport from "eslint-plugin-import";
-import reactConfig from "eslint-plugin-import/config/react.js";
-
-const { parserOptions } = reactConfig;
 
 export default [
+  {
+    plugins: {
+      "react-hooks": eslintReactHooks,
+      react: eslintReact,
+      "react-refresh": eslintReactRefresh,
+      prettier: prettierPlugin,
+      import: eslintImport,
+    },
+  },
   {
     ignores: ["node_modules", "dist"],
   },
   js.configs.recommended,
   {
-    plugins: {
-      react: eslintReact,
-      "react-hooks": eslintReactHooks,
-      "react-refresh": eslintReactRefresh,
-      prettier: prettierPlugin,
-      import: eslintImport,
-    },
     languageOptions: {
       globals: {
         ...globals.node,
         ...globals.browser,
         ...globals.es2024,
       },
-      parserOptions,
+      parserOptions: eslintReact.configs.recommended.parserOptions,
     },
+  },
+  {
+    files: ["**/*.{js,jsx}"],
     rules: {
       ...eslintConfigPrettier.rules,
       "no-console": "warn",
