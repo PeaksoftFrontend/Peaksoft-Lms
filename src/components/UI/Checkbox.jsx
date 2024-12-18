@@ -1,14 +1,7 @@
-import React from "react";
-import Checkbox from "@mui/material/Checkbox";
-import { styled } from "@mui/material/styles";
+import { styled } from "@mui/material";
+import { Checkbox as MuiCheckbox } from "@mui/material";
 
-export const CustomCheckbox = ({
-  checked,
-  onChange,
-  disabled,
-  color,
-  ...props
-}) => {
+export const Checkbox = ({ checked, onChange, disabled, color, ...props }) => {
   return (
     <StyledCheckbox
       checked={checked}
@@ -19,7 +12,7 @@ export const CustomCheckbox = ({
   );
 };
 
-const StyledCheckbox = styled(Checkbox)(() => ({
+const StyledCheckbox = styled(MuiCheckbox)(() => ({
   color: "#000000",
 
   "&:hover": {
