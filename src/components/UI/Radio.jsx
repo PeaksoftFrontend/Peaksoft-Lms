@@ -1,6 +1,6 @@
 import { Radio as MuiRadio, FormControlLabel } from "@mui/material";
 
-export const Radio = ({ correctAnswer, value, onChange, ...props }) => {
+export const Radio = ({ color, value, onChange, ...props }) => {
   return (
     <FormControlLabel
       value={value}
@@ -10,7 +10,7 @@ export const Radio = ({ correctAnswer, value, onChange, ...props }) => {
         <MuiRadio
           sx={{
             "&.Mui-checked": {
-              color: correctAnswer ? "green" : "red",
+              color: color ? color : "",
             },
           }}
         />
