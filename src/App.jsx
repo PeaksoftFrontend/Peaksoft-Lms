@@ -1,5 +1,3 @@
-export const App = () => {
-  // console.log("render");
-
+const App = () => {
   return <div></div>;
 };

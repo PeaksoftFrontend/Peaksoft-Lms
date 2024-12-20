@@ -1,6 +1,7 @@
 import React from "react";
+import { useTable } from "react-table";
 import {
-  Table,
+  Table as MUITable,
   TableBody,
   TableCell,
   TableContainer,
@@ -9,36 +10,42 @@ import {
   Paper,
 } from "@mui/material";
 
-export const TableTaxt = ({ rows, columns }) => {
+export const TableTaxt = ({ columns, data }) => {
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable({
+      columns,
+      data,
+    });
+
   return (
     <TableContainer component={Paper}>
-      <Table>
+      <MUITable {...getTableProps()}>
         <TableHead>
-          {columns.map((item) => (
-            <TableRow key={item.id} {...item}>
-              <TableCell>{item.id}</TableCell>
-              <TableCell>{item.name}</TableCell>
-              <TableCell>{item.group}</TableCell>
-              <TableCell>{item.format}</TableCell>
-              <TableCell>{item.phone}</TableCell>
-              <TableCell>{item.email}</TableCell>
+          {headerGroups.map((headerGroup) => (
+            <TableRow {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <TableCell {...column.getHeaderProps()}>
+                  {column.render("Header")}
+                </TableCell>
+              ))}
             </TableRow>
           ))}
         </TableHead>
-
-        <TableBody>
-          {rows.map((row, index) => (
-            <TableRow key={index} {...row}>
-              <TableCell>{index + 1}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.group}</TableCell>
-              <TableCell>{row.format}</TableCell>
-              <TableCell>{row.phone}</TableCell>
-              <TableCell>{row.email}</TableCell>
-            </TableRow>
-          ))}
+        <TableBody {...getTableBodyProps()}>
+          {rows.map((row) => {
+            prepareRow(row);
+            return (
+              <TableRow {...row.getRowProps()}>
+                {row.cells.map((cell) => (
+                  <TableCell {...cell.getCellProps()}>
+                    {cell.render("Cell")}
+                  </TableCell>
+                ))}
+              </TableRow>
+            );
+          })}
         </TableBody>
-      </Table>
+      </MUITable>
     </TableContainer>
   );
 };
