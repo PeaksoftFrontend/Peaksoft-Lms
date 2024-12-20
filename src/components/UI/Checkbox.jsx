@@ -1,14 +1,24 @@
 import { styled } from "@mui/material";
 import { Checkbox as MuiCheckbox } from "@mui/material";
 
-export const Checkbox = ({ checked, onChange, disabled, color, ...props }) => {
+export const Checkbox = ({
+  checked,
+  label,
+  onChange,
+  disabled,
+  color,
+  ...props
+}) => {
   return (
-    <StyledCheckbox
-      checked={checked}
-      onChange={onChange}
-      disabled={disabled}
-      {...props}
-    />
+    <label>
+      <StyledCheckbox
+        checked={checked}
+        onChange={onChange}
+        disabled={disabled}
+        {...props}
+      />
+      {label}
+    </label>
   );
 };
 
