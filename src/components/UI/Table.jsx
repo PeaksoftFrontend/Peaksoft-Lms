@@ -8,9 +8,10 @@ import {
   TableHead,
   TableRow,
   Paper,
+  styled,
 } from "@mui/material";
 
-export const TableTaxt = ({ columns, data }) => {
+export const Table = ({ columns, data }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
       columns,
@@ -18,8 +19,8 @@ export const TableTaxt = ({ columns, data }) => {
     });
 
   return (
-    <TableContainer component={Paper}>
-      <MUITable {...getTableProps()}>
+    <StyledTableContainer component={Paper}>
+      <StyledMui {...getTableProps()}>
         <TableHead>
           {headerGroups.map((headerGroup) => (
             <TableRow {...headerGroup.getHeaderGroupProps()}>
@@ -45,7 +46,37 @@ export const TableTaxt = ({ columns, data }) => {
             );
           })}
         </TableBody>
-      </MUITable>
-    </TableContainer>
+      </StyledMui>
+    </StyledTableContainer>
   );
 };
+
+const StyledTableContainer = styled(TableContainer)({
+  width: "1140px",
+  margin: "20px",
+  borderRadius: "10px",
+  border: "1px solid #D4D4D4",
+  backgroundColor: "#FFFFF",
+  padding: "0 0 10px 10px",
+});
+
+const StyledMui = styled(MUITable)({
+  width: "100%",
+  border: "none",
+  backgroundColor: "#FFFFFF",
+  "& thead th": {
+    border: "none",
+    fontWeight: "bold",
+    color: "#010106",
+  },
+  "& tbody tr": {
+    backgroundColor: "#FFFFFF",
+  },
+  "& tbody tr:nth-of-type(odd)": {
+    backgroundColor: "rgba(212,212,212,1)",
+  },
+  "& tbody td": {
+    border: "none",
+    color: "#010106",
+  },
+});
