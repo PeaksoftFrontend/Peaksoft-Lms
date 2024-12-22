@@ -1,5 +1,10 @@
-const App = () => {
-  return <div></div>;
-};
+import { MeatballsList } from "./components/UI/MeatballsList";
+import { menu } from "./utils/constants";
 
-export default App;
+export const App = () => {
+  return (
+    <div>
+      <MeatballsList menu={menu} />
+    </div>
+  );
+};

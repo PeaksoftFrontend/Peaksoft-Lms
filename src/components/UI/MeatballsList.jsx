@@ -1,8 +1,9 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
-import MenuItem, { menuItemClasses } from "@mui/material/MenuItem";
-import { MenuList, styled } from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
+import { styled } from "@mui/material";
+import { Icons } from "../../assets";
 
 export const MeatballsList = ({ menu = [] }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -15,7 +16,7 @@ export const MeatballsList = ({ menu = [] }) => {
   };
 
   return (
-    <div>
+    <>
       <Button
         id="basic-button"
         aria-controls={open ? "basic-menu" : undefined}
@@ -23,7 +24,7 @@ export const MeatballsList = ({ menu = [] }) => {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        +
+        <Icons.Delete />
       </Button>
       <StyledUl
         id="basic-menu"
@@ -36,18 +37,18 @@ export const MeatballsList = ({ menu = [] }) => {
       >
         <StyledDiv>
           {menu?.map((item) => (
-            <StyledLi key={item.id} {...item} />
+            <StyledLi key={item.id} />
           ))}
         </StyledDiv>
       </StyledUl>
-    </div>
+    </>
   );
 };
 
 export const StyledDiv = styled("div")({
   width: "218px",
 });
-export const StyledLi = styled("MenuItem")({
+export const StyledLi = styled(MenuItem)({
   borderBottom: "1px solid #D4D4D4",
   height: "44px",
   display: "flex",
@@ -58,18 +59,15 @@ export const StyledLi = styled("MenuItem")({
     width: "100%",
     color: "#1976d2",
   },
-  "&:hover": {
+  "&:hover ": {
     color: "#1976d2",
-
     background: "#f0f0f0",
-
     "& svg path": {
       fill: "#1976d2",
     },
   },
 });
-export const StyledUl = styled("Menu")({
-  padding: "18px 18px 18px 18px",
+export const StyledUl = styled(Menu)({
   borderRadius: "10px",
   boxShadow: "3px 2px 12px 0px rgba(34, 60, 80, 0.2)",
   position: "fixed",

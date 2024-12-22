@@ -1,1 +1,5 @@
-export const menu = [{}];
+export const menu = [
+  {
+    name: "Gulnur",
+  },
+];
