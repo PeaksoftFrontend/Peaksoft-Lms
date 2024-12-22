@@ -37,6 +37,8 @@ import StudentThree from "./icons/student-three.svg?react";
 import Students from "./icons/students.svg?react";
 import UserStudent from "./icons/user-student.svg?react";
 import VideoTutorial from "./icons/video-tutorial.svg?react";
+import OptionIcon from "./icons/options-icon.svg?react";
+
 export const Icons = {
   AddBlack,
   AddContact,
@@ -77,4 +79,5 @@ export const Icons = {
   CartTest,
   Bell,
   Leave,
+  OptionIcon,
 };
