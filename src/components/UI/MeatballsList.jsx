@@ -5,50 +5,55 @@ import MenuItem from "@mui/material/MenuItem";
 import { styled } from "@mui/material";
 import { Icons } from "../../assets";
 
-export const MeatballsList = ({ menu = [] }) => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+export const MeatBallsList = ({ items = [] }) => {
+  const [menuAnchor, setMenuAnchor] = React.useState(null);
+  const isOpen = Boolean(menuAnchor);
+
+  const handleMenuOpen = (event) => {
+    setMenuAnchor(event.currentTarget);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
+
+  const handleMenuClose = () => {
+    setMenuAnchor(null);
   };
 
   return (
     <>
       <Button
-        id="basic-button"
-        aria-controls={open ? "basic-menu" : undefined}
+        id="menu-button"
+        aria-controls={isOpen ? "menu" : undefined}
         aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
-        onClick={handleClick}
+        aria-expanded={isOpen ? "true" : undefined}
+        onClick={handleMenuOpen}
       >
-        <Icons.Delete />
+        <Icons.OptionIcon />
       </Button>
-      <StyledUl
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
+      <MenuContainer
+        id="menu"
+        anchorEl={menuAnchor}
+        open={isOpen}
+        onClose={handleMenuClose}
         MenuListProps={{
-          "aria-labelledby": "basic-button",
+          "aria-labelledby": "menu-button",
         }}
       >
-        <StyledDiv>
-          {menu?.map((item) => (
-            <StyledLi key={item.id} />
+        <MenuContent>
+          {items?.map((item) => (
+            <MenuItemStyled key={item.id} value={item.value}>
+              {item.label}
+            </MenuItemStyled>
           ))}
-        </StyledDiv>
-      </StyledUl>
+        </MenuContent>
+      </MenuContainer>
     </>
   );
 };
 
-export const StyledDiv = styled("div")({
+export const MenuContent = styled("div")({
   width: "218px",
 });
-export const StyledLi = styled(MenuItem)({
+
+export const MenuItemStyled = styled(MenuItem)({
   borderBottom: "1px solid #D4D4D4",
   height: "44px",
   display: "flex",
@@ -56,20 +61,19 @@ export const StyledLi = styled(MenuItem)({
   gap: "12px",
   "&:hover": {
     backgroundColor: "#f0f0f0",
-    width: "100%",
     color: "#1976d2",
-  },
-  "&:hover ": {
-    color: "#1976d2",
-    background: "#f0f0f0",
     "& svg path": {
       fill: "#1976d2",
     },
   },
+  "&:last-of-type": {
+    borderBottom: "none",
+  },
 });
-export const StyledUl = styled(Menu)({
+
+export const MenuContainer = styled(Menu)({
   borderRadius: "10px",
-  boxShadow: "3px 2px 12px 0px rgba(34, 60, 80, 0.2)",
+  boxShadow: "2px 2px 8px rgba(34, 60, 80, 0.1)",
   position: "fixed",
   display: "flex",
   flexDirection: "column",

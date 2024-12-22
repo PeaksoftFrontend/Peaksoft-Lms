@@ -1,5 +1,7 @@
 export const menu = [
   {
-    name: "Gulnur",
+    id: "1",
+    value: "Gulnur",
+    label: "Гулнур",
   },
 ];
