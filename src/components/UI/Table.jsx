@@ -1,4 +1,3 @@
-import React from "react";
 import { useTable } from "react-table";
 import {
   Table as MUITable,
@@ -52,7 +51,6 @@ export const Table = ({ columns, data }) => {
 };
 
 const StyledTableContainer = styled(TableContainer)({
-  width: "1140px",
   margin: "20px",
   borderRadius: "10px",
   border: "1px solid #D4D4D4",
