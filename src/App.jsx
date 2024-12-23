@@ -1,3 +1,9 @@
+import { ModalComponent } from "./components/UI/ModalComponent";
+
 export const App = () => {
-  return <div></div>;
+  return (
+    <div>
+      <ModalComponent height="581px" />
+    </div>
+  );
 };
