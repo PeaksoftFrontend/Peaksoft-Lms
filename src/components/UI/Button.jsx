@@ -26,7 +26,7 @@ const StyledButton = styled(MuiButton)(({ variant }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  ...(variant === "outlined" && {
+  ...(variant === "warning" && {
     width: "100%",
     height: "40px",
     borderRadius: "8px",
@@ -52,7 +52,7 @@ const StyledButton = styled(MuiButton)(({ variant }) => ({
     },
   }),
 
-  ...(variant === "contained" && {
+  ...(variant === "cancellation" && {
     width: "100%",
     height: "40px",
     borderRadius: "8px",
@@ -73,30 +73,7 @@ const StyledButton = styled(MuiButton)(({ variant }) => ({
       background: "rgba(28, 27, 31, 0.12)",
     },
   }),
-
-  ...(variant === "save" && {
-    width: "100%",
-    height: "40px",
-    borderRadius: "8px",
-    backgroundColor: "#3772FF",
-    color: " #FFFF",
-    fontSize: "14px",
-    fontWeight: 500,
-
-    "&:hover": {
-      backgroundColor: "#1D60FF",
-    },
-    "&:active": {
-      backgroundColor: "#6190FF",
-    },
-    ":disabled": {
-      border: "none",
-      color: "#FFFF",
-      background: "rgba(28, 27, 31, 0.12)",
-    },
-  }),
-
-  ...(variant === "cancellation" && {
+  ...(variant === "outlined" && {
     width: "100%",
     height: "40px",
     borderRadius: "8px",
@@ -118,7 +95,7 @@ const StyledButton = styled(MuiButton)(({ variant }) => ({
     },
   }),
 
-  ...(variant === "savee" && {
+  ...(variant === "with-icon" && {
     width: "58x",
     height: "58px",
     borderRadius: " 50%",
