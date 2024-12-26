@@ -70,7 +70,6 @@ export default [
     },
   },
   {
-    files: ["eslint.config.js"],
     rules: {
       "import/no-default-export": "off",
     },
