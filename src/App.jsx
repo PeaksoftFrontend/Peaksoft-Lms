@@ -1,5 +1,11 @@
+import TestCreate from "./components/admin/TestCreate";
+
 export const App = () => {
-  return <div></div>;
+  return (
+    <div>
+      <TestCreate />
+    </div>
+  );
 };
 
 export default App;
