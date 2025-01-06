@@ -1,5 +1,11 @@
+import { SideBar } from "./layout/SideBar";
+
 export const App = () => {
-  return <div></div>;
+  return (
+    <div>
+      <SideBar />
+    </div>
+  );
 };
 
 export default App;
