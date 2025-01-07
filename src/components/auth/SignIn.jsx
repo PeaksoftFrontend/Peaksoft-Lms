@@ -1,7 +1,17 @@
 import { styled } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { Button } from "../UI/Button";
+import { useState } from "react";
+import { Modal } from "../UI/Modal";
+import { FotgotPassword } from "./FotgotPassword.";
 
 export const SignIn = () => {
+  const [modal, setModal] = useState(false);
+
+  const handlerModal = () => {
+    setModal(true);
+  };
+
   const {
     register,
     handleSubmit,
@@ -71,11 +81,14 @@ export const SignIn = () => {
                 <StyledError>{errors.password.message}</StyledError>
               )}
             </StyledContainerInputt>
-            <p>Забыли пароль?</p>
+            <p onClick={handlerModal}>Забыли пароль?</p>
           </StyledBox>
         </section>
         <StyledButton type="submit">войти</StyledButton>
       </StyledForm>
+      <Modal open={modal} onClose={() => setModal(false)}>
+        <FotgotPassword />
+      </Modal>
     </StyledWrapper>
   );
 };
@@ -164,7 +177,7 @@ const StyledError = styled("span")(() => ({
   fontSize: "14px",
   paddingLeft: "4px",
 }));
-const StyledButton = styled("button")(() => ({
+const StyledButton = styled(Button)(() => ({
   width: "214px",
   height: "51px",
   background: "#3772FF",
