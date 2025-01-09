@@ -88,12 +88,13 @@ const StyledListItem = styled(ListItem)({
   "&:hover": {
     color: "rgba(31,110,212,1)",
   },
+  "& .MuiButtonBase-root": {
+    "&:hover": {
+      background: "rgba(221, 233, 249, 1)",
+    },
+  },
 });
 const StyledList = styled(List)({
-  "&: .Paper-root": {
-    background: "blue",
-  },
-
   "&:hover": {
     color: "rgba(221,233,249,1)",
 
@@ -110,6 +111,6 @@ const StyledDiv = styled("div")({
   width: "10px",
   height: "10px",
   borderRadius: "10px",
-  background: "rgba(250,43,86,1)",
+  background: "red",
   marginLeft: "130px",
 });
