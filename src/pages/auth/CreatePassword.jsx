@@ -1,23 +1,20 @@
 import { styled } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { FotgotPassword } from "./FotgotPassword.";
-import { Modal } from "../../components/UI/Modal";
 import { Button } from "../../components/UI/Button";
 import Boy from "../../assets/images/boy.png";
 import Logo from "../../assets/images/Logo.png";
+import { useState } from "react";
 import { Icons } from "../../assets";
 
-export const SignIn = () => {
-  const [modal, setModal] = useState(false);
+export const CreatePassword = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [value, setValue] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
-
-  const handlerModal = () => {
-    setModal(true);
+  const toggleEmailVisibility = () => {
+    setValue((prev) => !prev);
   };
 
   const {
@@ -40,45 +37,48 @@ export const SignIn = () => {
       </StyleWrapperBoy>
       <StyledWrapper>
         <StyledContainer>
-          <StyledText>Добро пожаловать</StyledText>
-          <p>
-            <span>в</span> PEAKSOFT LMS !
-          </p>
+          <p>Создать пароль</p>
         </StyledContainer>
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
           <section>
             <StyledContainerInput>
-              <label>Логин:</label>
+              <label>Новый пароль:</label>
               <StyledMessage>
-                <StyledInput
-                  {...register("email", {
-                    required: {
-                      value: true,
-                      message: "Введите email",
-                    },
-                    pattern: {
-                      value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                      message: "не правильно введен email",
-                    },
-                  })}
-                  type="email"
-                  placeholder="Введите логин"
-                  error={!!errors.email}
-                />
+                <StyledPasswordWrapper>
+                  <StyledInput
+                    {...register("email", {
+                      required: {
+                        value: true,
+                        message: "Введите email",
+                      },
+                      pattern: {
+                        value:
+                          /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                        message: "не правильно введен email",
+                      },
+                    })}
+                    type={value ? "text" : "email"}
+                    placeholder="Введите новый email"
+                    error={!!errors.email}
+                  />
+                  <PasswordToggle onClick={toggleEmailVisibility} type="button">
+                    {value ? <Icons.Eyes /> : <Icons.EyesGod />}
+                  </PasswordToggle>
+                </StyledPasswordWrapper>
                 {errors.email && (
                   <StyledError>{errors.email.message}</StyledError>
                 )}
               </StyledMessage>
             </StyledContainerInput>
             <StyledBox>
-              <label>Пароль:</label>
+              <label>Подтверждение:</label>
               <StyledContainerInputt>
                 <StyledPasswordWrapper>
                   <StyledInput
                     {...register("password", {
                       required: {
                         value: true,
-                        message: "Введите password",
+                        message: "Введите новый пароль",
                       },
                       minLength: {
                         value: 6,
@@ -90,7 +90,7 @@ export const SignIn = () => {
                       },
                     })}
                     type={showPassword ? "text" : "password"}
-                    placeholder="Введите пароль"
+                    placeholder="Подтвердите пароль"
                     error={!!errors.password}
                   />
                   <PasswordToggle
@@ -100,32 +100,18 @@ export const SignIn = () => {
                     {showPassword ? <Icons.Eyes /> : <Icons.EyesGod />}
                   </PasswordToggle>
                 </StyledPasswordWrapper>
-
                 {errors.password && (
                   <StyledError>{errors.password.message}</StyledError>
                 )}
               </StyledContainerInputt>
-              <p onClick={handlerModal}>Забыли пароль?</p>
             </StyledBox>
           </section>
-          <StyledButton type="submit">войти</StyledButton>
+          <StyledButton type="submit">Создать</StyledButton>
         </StyledForm>
-        <Modal
-          headerText="Забыли пароль"
-          open={modal}
-          onClose={() => setModal(false)}
-        >
-          <FotgotPassword />
-        </Modal>
       </StyledWrapper>
     </StyledWrapperDiv>
   );
 };
-const StyledPasswordWrapper = styled("div")({
-  position: "relative",
-  display: "flex",
-  alignItems: "center",
-});
 const PasswordToggle = styled("button")({
   position: "absolute",
   right: "10px",
@@ -135,6 +121,11 @@ const PasswordToggle = styled("button")({
   fontSize: "16px",
 });
 
+const StyledPasswordWrapper = styled("div")({
+  position: "relative",
+  display: "flex",
+  alignItems: "center",
+});
 const StyledLofo = styled("div")({
   display: "flex",
   flexDirection: "column",
@@ -198,19 +189,10 @@ const StyledContainer = styled("div")(() => ({
   "& p": {
     fontSize: "24px",
     fontWeight: 600,
-    color: "#FA2B56",
-  },
-  "& span": {
-    fontSize: "24px",
-    fontWeight: 600,
-    color: "#1F1F1F",
+    color: " rgba(31, 31, 31, 1)",
   },
 }));
-const StyledText = styled("a")(() => ({
-  fontSize: "24px",
-  fontWeight: 600,
-  color: "#1F1F1F",
-}));
+
 const StyledContainerInput = styled("div")(() => ({
   display: "flex",
   flexDirection: "column",
