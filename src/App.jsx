@@ -1,3 +1,9 @@
+import { SignIn } from "./pages/auth/SignIn";
+
 export const App = () => {
-  return <div></div>;
+  return (
+    <div>
+      <SignIn />
+    </div>
+  );
 };
