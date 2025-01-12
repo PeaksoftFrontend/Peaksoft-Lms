@@ -1,4 +1,4 @@
-import { Box, Container, styled, Typography } from "@mui/material";
+import { Box, Paper, styled, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../UI/input/Input";
 import {
@@ -11,9 +11,10 @@ import {
   updateOption,
   updateQuestionText,
 } from "../../redux/slices/testSlice";
-import { Checkbox } from "../UI/Checkbox";
 import { Icons } from "../../assets";
 import { Button } from "../UI/Button";
+import { Radio } from "../UI/Radio";
+import { MultiInput } from "../UI/input/MultiInput";
 
 const TestCreate = () => {
   const dispatch = useDispatch();
@@ -26,144 +27,116 @@ const TestCreate = () => {
   const handleCancel = () => {
     console.log("Изменения отменены.");
   };
-  return (
-    <Container>
-      <MainBox>
-        <TitleBox>
-          <TitleTypography>Название теста</TitleTypography>
-          <InputBox>
-            <Input
-              label="Введите название теста"
-              value={testName}
-              onChange={(e) => dispatch(setTestName(e.target.value))}
-              fullWidth
-              InputLabelProps={{
-                style: {
-                  width: "100%",
-                  transform: "translate(20px, 53%)",
-                },
-              }}
-            />
-          </InputBox>
-        </TitleBox>
 
-        {questions.map((question, index) => (
-          <QuestionBox key={index}>
-            <TextQuestBox>
-              <LinetTypography>{index + 1}</LinetTypography>
-              <QuestInputBox>
-                <Input
-                  value={question.text}
-                  label="Введите вопрос"
+  return (
+    <StyledMainBox>
+      <StyledWrapperFormTitle elevation={2}>
+        <StyledTitleTypography>Название теста</StyledTitleTypography>
+        <Input
+          placeholder="Введите название теста"
+          value={testName}
+          onChange={(e) => dispatch(setTestName(e.target.value))}
+          fullWidth
+        />
+      </StyledWrapperFormTitle>
+
+      {questions.map((question, index) => (
+        <StyledQuestionBox key={index}>
+          <StyledTextQuestBox>
+            <StyledLineTypography>{index + 1}</StyledLineTypography>
+            <StyledQuestInputBox>
+              <Input
+                value={question.text}
+                placeholder="Введите вопрос"
+                onChange={(e) =>
+                  dispatch(updateQuestionText({ index, text: e.target.value }))
+                }
+                fullWidth
+              />
+            </StyledQuestInputBox>
+
+            <StyledCheckboxes>
+              <Radio
+                checked={question.singleChoice}
+                label="Один из списка"
+                onChange={() =>
+                  dispatch(
+                    toggleSingleChoice({
+                      questionIndex: index,
+                      isSingleChoice: true,
+                    })
+                  )
+                }
+              />
+              <Radio
+                checked={!question.singleChoice}
+                label="Несколько из списка"
+                onChange={() =>
+                  dispatch(
+                    toggleSingleChoice({
+                      questionIndex: index,
+                      isSingleChoice: false,
+                    })
+                  )
+                }
+              />
+            </StyledCheckboxes>
+          </StyledTextQuestBox>
+
+          <StyledOptionsBox>
+            {question.options.map((option, optionIndex) => (
+              <StyledOption key={optionIndex}>
+                <StyledRadio />
+                <MultiInput
+                  placeholder={`Вариант ${optionIndex + 1}`}
+                  value={option}
+                  Icon={
+                    <Icons.Cancel
+                      onClick={() =>
+                        dispatch(
+                          deleteOption({
+                            questionIndex: index,
+                            optionIndex,
+                          })
+                        )
+                      }
+                    />
+                  }
                   onChange={(e) =>
                     dispatch(
-                      updateQuestionText({ index, text: e.target.value })
+                      updateOption({
+                        questionIndex: index,
+                        optionIndex,
+                        value: e.target.value,
+                      })
                     )
                   }
                   fullWidth
                 />
-              </QuestInputBox>
-
-              <Checkboxes>
-                <Checkbox
-                  checked={question.singleChoice}
-                  label="Один из списка"
-                  onChange={() =>
-                    dispatch(
-                      toggleSingleChoice({
-                        questionIndex: index,
-                        isSingleChoice: true,
-                      })
-                    )
-                  }
-                />
-                <Checkbox
-                  checked={!question.singleChoice}
-                  label="Несколько из списков"
-                  onChange={() =>
-                    dispatch(
-                      toggleSingleChoice({
-                        questionIndex: index,
-                        isSingleChoice: false,
-                      })
-                    )
-                  }
-                />
-              </Checkboxes>
-            </TextQuestBox>
-
-            <OptionsBox>
-              {question.options.map((option, optionIndex) => (
-                <Box key={optionIndex}>
-                  <OptionInputBox>
-                    <Input
-                      label={`Вариант ${optionIndex + 1}`}
-                      value={option}
-                      onChange={(e) =>
-                        dispatch(
-                          updateOption({
-                            questionIndex: index,
-                            optionIndex,
-                            value: e.target.value,
-                          })
-                        )
-                      }
-                      fullWidth
-                    />
-                  </OptionInputBox>
-                  <Icons.Cancel
-                    onClick={() =>
-                      dispatch(
-                        deleteOption({
-                          questionIndex: index,
-                          optionIndex,
-                        })
-                      )
-                    }
-                  />
-                </Box>
-              ))}
-              <Box>
-                <Typography
-                  sx={{
-                    cursor: "pointer",
-                    color: "blue",
-                    textDecoration: "underline",
-                  }}
+              </StyledOption>
+            ))}
+            <StyledOptionActions>
+              <WrapperVariants>
+                <StyledAddOptionText
+                  onClick={() => dispatch(addOption({ questionIndex: index }))}
                 >
-                  <span
-                    onClick={() =>
-                      dispatch(addOption({ questionIndex: index }))
-                    }
-                    style={{
-                      cursor: "pointer",
-                      color: "blue",
-                      marginRight: "8px",
-                    }}
-                  >
-                    Добавить вариант
-                  </span>
-                  <span>или</span>
-                  <span
-                    onClick={() =>
-                      dispatch(
-                        addOption({
-                          questionIndex: index,
-                          value: "Другое", // Готовый текст "Другое"
-                        })
-                      )
-                    }
-                    style={{
-                      cursor: "pointer",
-                      color: "blue",
-                      marginLeft: "8px",
-                      textDecoration: "underline",
-                    }}
-                  >
-                    добавить вариант "Другое"
-                  </span>
-                </Typography>
-
+                  Добавить вариант
+                </StyledAddOptionText>
+                <span>или</span>
+                <StyledAddOptionText
+                  onClick={() =>
+                    dispatch(
+                      addOption({
+                        questionIndex: index,
+                        value: "Другое",
+                      })
+                    )
+                  }
+                >
+                  добавить вариант "Другое"
+                </StyledAddOptionText>
+              </WrapperVariants>
+              <StyledIcons>
                 <Icons.Duplicate
                   onClick={() =>
                     dispatch(addQuestion({ question: { ...question } }))
@@ -172,121 +145,145 @@ const TestCreate = () => {
                 <Icons.Delete
                   onClick={() => dispatch(deleteQuestion({ index }))}
                 />
-              </Box>
-            </OptionsBox>
-          </QuestionBox>
-        ))}
+              </StyledIcons>
+            </StyledOptionActions>
+          </StyledOptionsBox>
+        </StyledQuestionBox>
+      ))}
 
-        <Box>
-          <Button variant="cancellation" onClick={handleCancel}>
+      <StyledActionBox>
+        <StyledWrapperAction>
+          <StyledCancelOutlinedButton variant="outlined" onClick={handleCancel}>
             Отмена
-          </Button>
-          <Button variant="contained" onClick={handleSave}>
+          </StyledCancelOutlinedButton>
+          <StyledSaveButton variant="contained" onClick={handleSave}>
             Сохранить
-          </Button>
-        </Box>
-      </MainBox>
-    </Container>
+          </StyledSaveButton>
+        </StyledWrapperAction>
+      </StyledActionBox>
+    </StyledMainBox>
   );
 };
 
 export default TestCreate;
 
-const MainBox = styled(Box)(() => ({
-  height: "875px",
-  width: "1150px",
-  backgroundColor: "#EFF0F4",
-  display: "flex",
-  alignItems: "center",
-  flexDirection: "column",
-  gap: "20px",
-  overflow: "hidden", // Ограничиваем содержимое
-}));
-
-const TitleBox = styled(Box)(() => ({
-  width: "1120px",
-  height: "124px",
-  backgroundColor: "#FFFFFF",
-  borderRadius: "10px",
-  border: "1px solid #D4D4D4",
+const StyledWrapperFormTitle = styled(Paper)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-  position: "relative",
-}));
-
-const TitleTypography = styled(Typography)(() => ({
-  fontWeight: "600",
-  fontSize: "18px",
-  lineHeight: "22px",
-  color: "#1F6ED4",
-  position: "absolute",
-  top: "20px",
-  left: "20px",
-  bottom: "20px",
-}));
-
-const InputBox = styled(Box)(() => ({
-  width: "1080px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: " center",
-  position: "absolute",
-  top: "60px",
-}));
-
-const QuestionBox = styled(Box)(() => ({
-  maxWidth: "1120px",
-  backgroundColor: "#FFFFFF",
-  borderRadius: "10px",
-  border: "1px solid #D4D4D4",
-  display: "flex",
-  flexDirection: "column",
-  position: "relative",
   width: "100%",
-  gap: "20px",
+  padding: theme.spacing(2.5),
+  border: "1px solid #D4D4D4",
+  boxShadow: "none",
+  borderRadius: "10px",
 }));
 
-const LinetTypography = styled(Typography)(() => ({
-  fontSize: "20px",
-  fontWeight: "600",
-  lineHeight: "22px",
-  color: "#1F6ED4",
-  position: "absolute",
-  top: "37px",
-  left: "25px",
+const StyledMainBox = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(3),
+  backgroundColor: theme.palette.background.default,
+  display: "flex",
+  flexDirection: "column",
+  gap: theme.spacing(2.5),
 }));
 
-const TextQuestBox = styled(Box)(() => ({
+const StyledTitleTypography = styled(Typography)(({ theme }) => ({
+  fontWeight: 600,
+  fontSize: "1.125rem",
+  color: theme.palette.primary.main,
+  marginBottom: theme.spacing(2.5),
+}));
+
+const StyledQuestionBox = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.background.paper,
+  borderRadius: "10px",
+  border: `1px solid ${theme.palette.divider}`,
+  padding: theme.spacing(2),
+  marginBottom: theme.spacing(2),
+  display: "flex",
+  flexDirection: "column",
+  gap: theme.spacing(3),
+}));
+
+const StyledLineTypography = styled(Typography)(({ theme }) => ({
+  fontSize: "1.25rem",
+  fontWeight: 600,
+  color: theme.palette.primary.main,
+}));
+
+const StyledTextQuestBox = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "row",
-  gap: "20px",
-  position: "relative",
+  gap: theme.spacing(2),
   flexWrap: "wrap",
 }));
 
-const QuestInputBox = styled(Box)(() => ({
-  width: "650px",
-  position: "absolute",
-  top: "26px",
-  left: "56px",
+const StyledRadio = styled(Radio)({
+  "&.MuiFormControlLabel-root": {
+    marginRight: 0,
+  },
+});
+
+const StyledQuestInputBox = styled(Box)(() => ({
+  flex: 1,
 }));
 
-const Checkboxes = styled(Box)(() => ({
-  position: "absolute",
-  top: "25px",
-  left: "720px",
+const StyledCheckboxes = styled(Box)(({ theme }) => ({
+  display: "flex",
+  gap: theme.spacing(2),
 }));
 
-const OptionsBox = styled(Box)(() => ({
+const StyledOptionsBox = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
-  // position: "relative",
+  gap: theme.spacing(1),
 }));
 
-const OptionInputBox = styled(Box)(() => ({
-  width: "1050px",
-  // position: "absolute",
-  // top: "100px",
+const StyledOption = styled(Box)(() => ({
+  display: "flex",
+  alignItems: "center",
 }));
+
+const StyledOptionActions = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  gap: theme.spacing(1),
+}));
+
+const StyledAddOptionText = styled(Typography)(() => ({
+  cursor: "pointer",
+  color: "blue",
+  textDecoration: "underline",
+}));
+
+const StyledIcons = styled(Box)(({ theme }) => ({
+  display: "flex",
+  gap: theme.spacing(1),
+}));
+
+const StyledActionBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  gap: theme.spacing(1),
+  justifyContent: "end",
+}));
+
+const StyledWrapperAction = styled(Box)(({ theme }) => ({
+  display: "flex",
+  gap: theme.spacing(1),
+}));
+
+const WrapperVariants = styled("div")({
+  display: "flex",
+  gap: "15px",
+});
+
+const StyledCancelOutlinedButton = styled(Button)({
+  width: "103px",
+  height: "40px",
+  borderRadius: "8px",
+});
+
+const StyledSaveButton = styled(Button)({
+  width: "125px",
+  height: "40px",
+  borderRadius: "8px",
+});
