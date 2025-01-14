@@ -1,13 +1,26 @@
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
+// import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Icons } from "../assets";
 import { styled, Typography } from "@mui/material";
 
 export const SideBar = () => {
+  const ADMIN_SIDEBAR = [
+    {
+      icon: Icons.PeopleUsers,
+      title: "Группы",
+      id: "1",
+    },
+    {
+      icon: Icons.UserStudent,
+      title: "Курсы",
+      id: "2",
+    },
+  ];
+
   const list = (
     <Box
       sx={{
@@ -31,46 +44,60 @@ export const SideBar = () => {
           lineHeight: "36px",
         }}
       >
-        <StyledDiv></StyledDiv>
+        <StyledDiv />
         PEAKSOFT
       </StyledTypograpy>
+      <StyledBox>
+        <StyledList>
+          {ADMIN_SIDEBAR.map((item) => (
+            <StyledListItem key={item.id}>
+              <StyleBoxBlue></StyleBoxBlue>
 
-      <StyledList>
-        {["Курсы"].map((text, index) => (
-          <StyledListItem key={text}>
-            <ListItemButton>
               <ListItemIcon>
-                {index % 2 === 0 ? (
-                  <Icons.PeopleUsers />
-                ) : (
-                  <Icons.UserStudent />
-                )}
+                <item.icon />
               </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </StyledListItem>
-        ))}
-      </StyledList>
+              <ListItemText primary={item.title} />
+            </StyledListItem>
+          ))}
+        </StyledList>
+      </StyledBox>
     </Box>
   );
 
   return <>{list}</>;
 };
 
-const StyledListItem = styled(ListItem)({
+const StyleBoxBlue = styled("div")({
+  width: "8px",
+  height: "51px",
+  background: "red",
   "&:hover": {
-    color: "rgba(31,110,212,1)",
+    background: "blue !important",
+    border: "1px solid green",
   },
-  "& .MuiButtonBase-root": {
-    "&:hover": {
-      background: "rgba(221, 233, 249, 1)",
-    },
+});
+const StyledBox = styled(Box)({
+  // display: "flex"
+  // alignItems:"center"
+});
+
+const StyledListItem = styled(ListItem)({
+  // display: "flex",
+  // justifyContent: "end",
+  width: "224px",
+  "&.MuiListItem-root:hover": {
+    color: "rgba(31,110,212,1)",
+    background: "rgba(221, 233, 249, 1)",
+    borderRadius: "10px",
+  },
+
+  "& .MuiButtonBase-root:hover": {
+    background: "none",
   },
 });
 const StyledList = styled(List)({
   "&:hover": {
     color: "rgba(221,233,249,1)",
-
     "& svg path": {
       fill: "rgba(31,110,212,1)",
     },
