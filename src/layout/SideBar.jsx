@@ -1,110 +1,64 @@
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-// import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Icons } from "../assets";
 import { styled, Typography } from "@mui/material";
+import { ADMIN_SIDEBAR, USER_SIDEBAR } from "../utils/constants";
 
-export const SideBar = () => {
-  const ADMIN_SIDEBAR = [
-    {
-      icon: Icons.PeopleUsers,
-      title: "Группы",
-      id: "1",
-    },
-    {
-      icon: Icons.UserStudent,
-      title: "Курсы",
-      id: "2",
-    },
-  ];
+export const SideBar = ({ role = "ADMIN" }) => {
+  // const location = useLocation();
+  const location = "groups";
 
-  const list = (
-    <Box
-      sx={{
-        width: 250,
-        height: "100vh",
-        backgroundColor: "#f9f9f9",
-        borderRight: "1px solid #ddd",
-        position: "fixed",
-        top: 0,
-        left: 0,
-      }}
-      role="presentation"
-    >
-      <StyledTypograpy
-        variant="h1"
-        sx={{
-          color: "rgba(31,110,212,1)",
-          fontWeight: "700",
-          fontFamily: "Poppins",
-          fontSize: "24px",
-          lineHeight: "36px",
-        }}
-      >
+  // const navigate = useNavigate();
+  const handleNavigate = (url) => {
+    // navigate(url);
+  };
+
+  const LIST_TYPE = role === "ADMIN" ? ADMIN_SIDEBAR : USER_SIDEBAR;
+
+  return (
+    <StyledBox role="presentation">
+      <StyledTypography variant="h1" onClick={() => handleNavigate("/")}>
         <StyledDiv />
         PEAKSOFT
-      </StyledTypograpy>
-      <StyledBox>
+      </StyledTypography>
+      <Box>
         <StyledList>
-          {ADMIN_SIDEBAR.map((item) => (
-            <StyledListItem key={item.id}>
-              <StyleBoxBlue></StyleBoxBlue>
-
-              <ListItemIcon>
+          {LIST_TYPE.map((item) => (
+            <StyledListItem
+              key={item.id}
+              onClick={() => handleNavigate(item.url)}
+              className={location === item.url ? "active" : ""}
+            >
+              <StyledListItemIcon>
                 <item.icon />
-              </ListItemIcon>
+              </StyledListItemIcon>
               <ListItemText primary={item.title} />
             </StyledListItem>
           ))}
         </StyledList>
-      </StyledBox>
-    </Box>
+      </Box>
+    </StyledBox>
   );
-
-  return <>{list}</>;
 };
 
-const StyleBoxBlue = styled("div")({
-  width: "8px",
-  height: "51px",
-  background: "red",
-  "&:hover": {
-    background: "blue !important",
-    border: "1px solid green",
-  },
-});
 const StyledBox = styled(Box)({
-  // display: "flex"
-  // alignItems:"center"
+  width: 250,
+  height: "100vh",
+  backgroundColor: "#FFFFFF",
+  position: "fixed",
+  top: 0,
+  left: 0,
 });
 
-const StyledListItem = styled(ListItem)({
-  // display: "flex",
-  // justifyContent: "end",
-  width: "224px",
-  "&.MuiListItem-root:hover": {
-    color: "rgba(31,110,212,1)",
-    background: "rgba(221, 233, 249, 1)",
-    borderRadius: "10px",
-  },
-
-  "& .MuiButtonBase-root:hover": {
-    background: "none",
-  },
-});
-const StyledList = styled(List)({
-  "&:hover": {
-    color: "rgba(221,233,249,1)",
-    "& svg path": {
-      fill: "rgba(31,110,212,1)",
-    },
-  },
-});
-const StyledTypograpy = styled(Typography)({
-  margin: "38px 59px 80px 49px",
+const StyledTypography = styled(Typography)({
+  margin: "38px 59px 66px 49px",
+  color: "rgba(31,110,212,1)",
+  fontWeight: 700,
+  fontFamily: "Poppins",
+  fontSize: "24px",
+  lineHeight: "36px",
 });
 
 const StyledDiv = styled("div")({
@@ -113,4 +67,41 @@ const StyledDiv = styled("div")({
   borderRadius: "10px",
   background: "red",
   marginLeft: "130px",
+});
+
+const StyledList = styled(List)({
+  display: "flex",
+  flexDirection: "column",
+  gap: "2px",
+});
+
+const StyledListItem = styled(ListItem)({
+  width: "224px",
+  cursor: "pointer",
+  paddingLeft: "26px",
+  borderLeft: "8px solid transparent",
+  display: "flex",
+  gap: "16px",
+  "&.active": {
+    borderLeft: "8px solid #1F6ED4",
+    color: "rgba(31,110,212,1)",
+    borderRadius: "0 10px 10px 0",
+    background: "rgba(221, 233, 249, 1)",
+    "& svg path": {
+      fill: "rgba(31,110,212,1)",
+    },
+  },
+  "&:hover": {
+    color: "rgba(31,110,212,1)",
+    background: "rgba(221, 233, 249, 1)",
+    borderRadius: "0 10px 10px 0",
+    borderLeft: "8px solid #1F6ED4",
+    "& svg path": {
+      fill: "rgba(31,110,212,1)",
+    },
+  },
+});
+
+const StyledListItemIcon = styled(ListItemIcon)({
+  minWidth: "fit-content",
 });
