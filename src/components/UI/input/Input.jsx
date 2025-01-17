@@ -2,7 +2,7 @@ import { useState } from "react";
 import { styled, TextField, InputAdornment, IconButton } from "@mui/material";
 import { Icons } from "../../../assets";
 
-const Input = ({
+export const Input = ({
   label,
   type = "text",
   value,
